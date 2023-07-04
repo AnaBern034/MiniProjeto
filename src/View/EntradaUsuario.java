@@ -5,41 +5,64 @@ import Controller.TarefaController;
 import Model.Cliente;
 import Model.Tarefa;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EntradaUsuario {
     TarefaController adicionarAnotação = new TarefaController();
-    Tarefa anotação = new Tarefa();
+    private Cliente cliente = new Cliente();
     ClienteController cadastro = new ClienteController();
-    Cliente cliente = new Cliente();
-    Scanner sc = new Scanner(System.in);
 
     public void CadastrarCliente(){
+        Scanner sc = new Scanner(System.in);
         System.out.println("Digite seu nome: ");
-        cliente.setNome(sc.next());
+        String nome = sc.next();
         System.out.println("Digite seu email: ");
-        cliente.setEmail(sc.next());
+        String email = sc.next();
         System.out.println("Digite sua senha: ");
-        cliente.setSenha(sc.next());
+        String senha = sc.next();
+
+        Cliente cliente = new Cliente(nome,email,senha);
 
         cadastro.CadastroCliente(cliente);
 
-        System.out.println("Digite as suas tarefas a fazer");
-        anotação.setAnotação(sc.next());
+        System.out.println("Deseja escrever alguma coisa\nsim\nnao");
+        String opcao = sc.next();
 
-        Tarefa notas = new Tarefa(anotação,cliente);
+        switch (opcao){
+            case "sim": adicionarNotas();
+            case "nao": return;
+        }
+    }
+    public void adicionarNotas(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite suas tarefas a fazer");
+        String anotacao = sc.next();
 
-        adicionarAnotação.adicionarAnotacaoCliente(notas,cliente);
-
+        Tarefa tarefa = new Tarefa(anotacao);
+        adicionarAnotação.adicionarNotasCliente(tarefa,cliente);
     }
 
     public void LoginCliente(){
+        Scanner sc = new Scanner(System.in);
         System.out.println("Digite o email");
         String loginEmail = sc.next();
         System.out.println("Digite sua senha");
         String loginSeha = sc.next();
 
         cadastro.ProcurarClienteExistente(loginEmail,loginSeha);
-        adicionarAnotação.mostrarAnotação(cliente);
+        mostrarTarefa(cliente);
+    }
+    public void mostrarTarefa(Cliente cliente){
+        List<Tarefa> tarefas = adicionarAnotação.getTarefaCliente(cliente);
+        if (tarefas.isEmpty()){
+            System.out.println("Nenhuma tarefa encontrada");
+        }else {
+            System.out.println("Anotações feitas"); {
+                for (Tarefa tarefa : tarefas){
+                    System.out.println(tarefa.getAnotação());
+                }
+            }
+        }
     }
 }

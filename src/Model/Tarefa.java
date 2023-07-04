@@ -1,12 +1,20 @@
 package Model;
 
-public class Tarefa {
+public class Tarefa{
     private String anotação;
-    private Cliente cliente;
+    private Long id;
+    Cliente cliente = new Cliente();
 
     public Tarefa() {
     }
-    public Tarefa(Tarefa anotação, Cliente cliente) {
+
+    public Tarefa(String anotação) {
+        this.anotação = anotação;
+    }
+
+    public Tarefa(String anotacao, Cliente cliente) {
+        this.anotação = anotacao;
+        this.cliente = cliente;
     }
 
     public String getAnotação() {

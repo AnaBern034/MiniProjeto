@@ -1,3 +1,4 @@
+import Model.Cliente;
 import View.EntradaUsuario;
 
 import java.util.Scanner;
@@ -7,16 +8,20 @@ public class Main {
         EntradaUsuario entrada = new EntradaUsuario();
         Scanner sc = new Scanner(System.in);
 
+
+
         while (true){
             System.out.println("Digite o numero que deseja \n" +
                     "1 - Cadastro\n" +
                     "2 - Login\n" +
-                    "3 - Sair");
+                    "3 - Adicionar anotação\n"+
+                    "4 - Sair");
             Integer numeroOpcao = sc.nextInt();
 
             switch (numeroOpcao){
                 case 1: entrada.CadastrarCliente();
                 case 2: entrada.LoginCliente();
+             //   case 3: entrada.adicionarNotas();
                 case 3: System.exit(0);
             }
         }
